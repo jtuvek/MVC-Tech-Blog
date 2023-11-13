@@ -1,0 +1,15 @@
+<!-- views/home.handlebars -->
+<h2>Welcome to the Tech Blog!</h2>
+{{#if user}}
+  <p>Hello, {{user.username}}!</p>
+  <a href="/logout">Logout</a>
+  <a href="/dashboard">Dashboard</a>
+{{else}}
+  <p>Please log in to access additional features.</p>
+  <a href="/login">Log In</a>
+  <a href="/signup">Sign Up</a>
+{{/if}}
+<h3>Latest Posts</h3>
+{{#each posts}}
+  {{> post}}
+{{/each}}

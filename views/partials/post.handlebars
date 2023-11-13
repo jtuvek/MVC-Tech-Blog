@@ -1,0 +1,19 @@
+<!-- views/partials/post.handlebars -->
+<div class="post">
+  <h2>{{title}}</h2>
+  <p>{{content}}</p>
+  <p>Created by {{user.username}} on {{createdAt}}</p>
+  <h3>Comments</h3>
+  {{#each comments}}
+    {{> comment}}
+  {{/each}}
+  {{#if user}}
+    <form action="/comment/{{id}}" method="POST">
+      <label for="comment">Add a Comment:</label>
+      <textarea id="comment" name="comment" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  {{else}}
+    <p>Please log in to leave a comment.</p>
+  {{/if}}
+</div>
