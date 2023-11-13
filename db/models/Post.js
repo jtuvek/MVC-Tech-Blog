@@ -1,6 +1,6 @@
 // db/models/Post.js
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../connection');
+const sequelize = require('./index');
 
 class Post extends Model {}
 
@@ -14,11 +14,18 @@ Post.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    // Add any other fields you need, such as userId for the association
+    // Add a foreign key for the association with the User model
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user', // 'user' is the table name of the User model
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
-    modelName: 'post',
+    modelName: 'Post',
   }
 );
 

@@ -1,6 +1,6 @@
 // db/models/Comment.js
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../connection');
+const sequelize = require('./index');
 
 class Comment extends Model {}
 
@@ -10,11 +10,26 @@ Comment.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    // Add any other fields you need, such as userId and postId for associations
+    // Add a foreign key for the association with the User model (comment creator)
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user', // 'user' is the table name of the User model
+        key: 'id',
+      },
+    },
+    // Add a foreign key for the association with the Post model (commented post)
+    postId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'post', // 'post' is the table name of the Post model
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
-    modelName: 'comment',
+    modelName: 'Comment',
   }
 );
 
