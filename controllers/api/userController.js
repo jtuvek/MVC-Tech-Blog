@@ -1,13 +1,15 @@
 // controllers/api/userController.js
 const express = require('express');
 const { User } = require('../../db/models');
+const bcryptHelper = require('../../utils/bcrypt');
 const router = express.Router();
 
 // User registration endpoint
 router.post('/signup', async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await User.create({ username, password });
+    const hashedPassword = await bcryptHelper.hashPassword(password);
+    const user = await User.create({ username, password: hashedPassword });
     req.session.save(() => {
       req.session.user_id = user.id;
       req.session.username = user.username;
@@ -26,7 +28,7 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ where: { username } });
 
-    if (!user || !user.checkPassword(password)) {
+    if (!user || !(await bcryptHelper.comparePassword(password, user.password))) {
       res.status(401).json({ message: 'Incorrect username or password' });
       return;
     }
