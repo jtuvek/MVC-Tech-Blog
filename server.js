@@ -4,7 +4,10 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const { sequelize } = require('./db/connection');
-const routes = require('./controllers');
+const homeRoutes = require('./controllers/homeController');
+const userRoutes = require('./controllers/api/userController');
+const commentRoutes = require('./controllers/commentController');
+const dashboardRoutes = require('./controllers/dashboardController');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -34,7 +37,10 @@ const sess = {
 app.use(session(sess));
 
 // Routes
-app.use(routes);
+app.use('/', homeRoutes);
+app.use('/api/users', userRoutes);
+app.use('/comments', commentRoutes);
+app.use('/dashboard', dashboardRoutes);
 
 // Sync Sequelize models and start the server
 sequelize.sync({ force: false }).then(() => {
