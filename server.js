@@ -43,7 +43,7 @@ app.use('/comments', commentRoutes);
 app.use('/dashboard', dashboardRoutes);
 
 // Sync Sequelize models and start the server
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });

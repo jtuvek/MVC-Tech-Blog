@@ -31,7 +31,7 @@ User.init(
       },
       // Before an update to the user, hash the password if it's being modified
       async beforeUpdate(updatedUserData) {
-        if (updatedUserData.password) {
+        if (updatedUserData.changed('password')) {
           updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
         }
         return updatedUserData;
