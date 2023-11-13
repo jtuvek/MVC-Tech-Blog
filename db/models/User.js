@@ -1,7 +1,7 @@
 // db/models/User.js
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 const sequelize = require('./index.js');
+const bcrypt = require('bcrypt');
 
 class User extends Model {
   // Function to check if an unhashed password matches the user's hashed password

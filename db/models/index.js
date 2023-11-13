@@ -10,12 +10,14 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     dialect: 'mysql',
     port: 3306,
+    dialectOptions: {
     define: {
       // Global model options
       timestamps: true, // Include timestamps (createdAt and updatedAt)
       underscored: true, // Use snake_case for column names
     },
-  }
+  },
+ }
 );
 
 const User = require('./User');
